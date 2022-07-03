@@ -1,0 +1,17 @@
+{
+  "name": "api-kit",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo 'no tests here'"
+  },
+  "files": ["**/*.js", "**/*.d.ts"],
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "tr3": "^0.1.2"
+  }
+}
