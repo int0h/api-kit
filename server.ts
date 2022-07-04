@@ -5,6 +5,7 @@ import {ContextProvider, initDuplexApiServer} from 'tr3/api/duplex/server/curry'
 import { AsyncApi } from 'tr3/api';
 import { ResolveCurryApi } from 'tr3/src/api';
 import {jsonCodec} from 'tr3/extensions/codecs/json';
+import cors, { CorsOptions, CorsOptionsDelegate } from 'cors';
 
 export function implementAPI<A extends AsyncApi>(apiSchema: A, implementation: ResolveCurryApi<A>) {
     return implementation;
@@ -15,10 +16,14 @@ type CreateAPIServerParams<A extends AsyncApi> = {
     apiImplementation: ResolveCurryApi<A>;
     contextProvider: ContextProvider;
     urlPrefix?: string;
+    corsParams?: CorsOptions | CorsOptionsDelegate;
 }
 
 export function createAPIServer<A extends AsyncApi>(params: CreateAPIServerParams<A>): express.Application {
     const app = express();
+
+    app.use(cors(params.corsParams));
+
     const implementation = implementCurryApi(params.apiSchema, params.apiImplementation);
 
     const middleware = apiMiddleware({
